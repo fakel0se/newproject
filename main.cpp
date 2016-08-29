@@ -7,12 +7,12 @@
 /* 
  * File:   main.cpp
  * Author: ilya
-asd
-asd
  *
  * Created on 27 июля 2016 г., 21:06
  */
 
+//fuck
+//yes
 #include <cstdlib>
 #include <iostream> 
 #include <string.h>
