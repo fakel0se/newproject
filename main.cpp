@@ -11,7 +11,7 @@
  * Created on 27 июля 2016 г., 21:06
  */
 
-//fuck
+//fuckyaeh
 //yes
 #include <cstdlib>
 #include <iostream> 
