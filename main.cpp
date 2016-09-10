@@ -7,7 +7,7 @@
 /* 
  * File:   main.cpp
  * Author: ilya
- *
+ * Алалалала
  * Created on 27 июля 2016 г., 21:06
  */
 
