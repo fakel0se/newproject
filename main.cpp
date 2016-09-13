@@ -7,12 +7,11 @@
 /* 
  * File:   main.cpp
  * Author: ilya
- *
+ * Алалалала
  * Created on 27 июля 2016 г., 21:06
  */
 
-//fuckyaeh
-//yes
+
 #include <cstdlib>
 #include <iostream> 
 #include <string.h>
@@ -50,6 +49,7 @@ using namespace std;
     const int TBLSZ = 23;
     name* table[TBLSZ];
     int no_of_errors;
+    char* buf;
     
     double expr() {
         double left = term();
@@ -143,39 +143,57 @@ using namespace std;
     
     token_value get_token() {
         char ch;
+	if (!buf) {
+	    buf = new char[1024]; 
+            delete[] buf;
+            cin.getline(buf, 1024);	
+	}
+        if (!*buf) {
+            delete[] buf;
+	    buf = new char[1024]; 
+            cin.getline(buf, 1024);            
+        }
+
         do {
-            if (!cin.get(ch)) return curr_tok = END;
+            ch = *buf++;
+            if (!ch && !isalnum(ch)) return curr_tok = END;
         } while (ch != '\n' && isspace(ch));
         switch (ch) {
-        case ';':    
-        case '\n':
-            //cin >> ws;
-            return curr_tok = PRINT;            
-        case '*':
-        case '/':
-        case '+':
-        case '-':
-        case '(':
-        case ')':
-        case '=':
-            return curr_tok = token_value(ch);
-        case '0': case '1': case '2': case '3': case '4': 
-        case '5': case '6': case '7': case '8': case '9':  
-        case '.':    
-            cin.putback(ch);
-            cin >> number_value;
-            return curr_tok = NUMBER;
-        default:
-            if (isalpha(ch)) {
-                char* p = name_string;
-                *p++ = ch;
-                while (cin.get(ch) && isalnum(ch)) *p++ = ch;
-                cin.putback(ch);
-                *p = 0;
-                return curr_tok = NAME;
-            }
-            error("incorrect lexem");
-            return curr_tok = PRINT;
+            case ';':    
+            case '\n':
+                //cin >> ws;
+                return curr_tok = PRINT;            
+            case '*':
+            case '/':
+            case '+':
+            case '-':
+            case '(':
+            case ')':
+            case '=':
+                return curr_tok = token_value(ch);
+            case '0': case '1': case '2': case '3': case '4': 
+            case '5': case '6': case '7': case '8': case '9':  
+            case '.':    
+                buf--;
+                number_value = atof(buf);
+                int a;
+                a = number_value;                
+                while (a >= 1) {
+                    a /= 10;
+                    buf++;
+                }
+                return curr_tok = NUMBER;
+            default:
+                if (isalpha(ch)) {
+                    char* p = name_string;
+                    *p++ = ch;
+                    while ((ch = *buf++) && isalnum(ch)) *p++ = ch;
+                    buf--;
+                    *p = 0;
+                    return curr_tok = NAME;
+                }
+                error("incorrect lexem");
+                return curr_tok = PRINT;
         }    
                     
     }
